@@ -1,3 +1,4 @@
+#coding=utf-8
 from __future__ import unicode_literals
 
 from django.db import models
@@ -15,30 +16,30 @@ class IDC(models.Model):
         verbose_name_plural = 'IDC机房'
 
 
-class EventLog(models.Model):
-    name = models.CharField(u'事件名称', max_length=128)
-    event_type_choices = (
-        ('IDC_event', u'IDC事件'),
-        ('Network_event', u'网络事件'),
-        ('Hardware_event', u'硬件事件'),
-        ('Other_event', u'其他事件'),
-    )
-    event_type = models.CharField(u'事件类型', choices= event_type_choices)
-    statistics_tag = models.CharField(u'统计标签', max_length=128)
-    detail = models.TextField(u'事件详情')
-    start_time = models.DateTimeField(u'事件发生时间', auto_now_add=True)
-    end_time = models.DateTimeField(u'事件结束时间', blank=True, auto_now=True)
-    memo = models.TextField(u'备注', blank=True, null=True)
+# class EventLog(models.Model):
+#     name = models.CharField(u'事件名称', max_length=128)
+#     event_type_choices = (
+#         ('IDC_event', u'IDC事件'),
+#         ('Network_event', u'网络事件'),
+#         ('Hardware_event', u'硬件事件'),
+#         ('Other_event', u'其他事件'),
+#     )
+#     event_type = models.CharField(u'事件类型', max_length=64, choices= event_type_choices)
+#     statistics_tag = models.CharField(u'统计标签', max_length=128)
+#     detail = models.TextField(u'事件详情')
+#     start_time = models.DateTimeField(u'事件发生时间', auto_now_add=True)
+#     end_time = models.DateTimeField(u'事件结束时间', blank=True, auto_now=True)
+#     memo = models.TextField(u'备注', blank=True, null=True)
+#
+#     def __unicode__(self):
+#         return u'%s___事件源: %s___时间: %s' %(self.name, self.statistics_tag, self.start_time)
+#     class Meta:
+#         verbose_name = '事件记录'
+#         verbose_name_plural = '事件记录'
 
-    def __unicode__(self):
-        return self.name
-    class Meta:
-        verbose_name = '事件记录'
-        verbose_name_plural = '事件记录'
 
 class Hardware_Event(models.Model):
-    name = models.CharField(u'')
-    date = models.DateField(u'故障时间', auto_now_add=True)
+    malfunction_date = models.DateField(u'故障日期', blank=True, null=True)
     hostname = models.CharField(u'主机名', max_length=64, blank=True, null=True)
     manufacturer_choices = (
         ('kxtech', u'凯翔'),
@@ -72,6 +73,19 @@ class Hardware_Event(models.Model):
     class Meta:
         verbose_name = '硬件故障记录'
         verbose_name_plural = '硬件故障记录'
+
+    def colored_event_level(self):
+        if self.event_level == 'high':
+            cell_html = '<span style="background: orange;">%s</span>'
+        elif self.event_level == 'average':
+            cell_html = '<span style="background: yellowgreen;">%s</span>'
+        elif self.event_level == 'disaster':
+            cell_html = '<span style="background: red;">%s</span>'
+        else:
+            cell_html = '<span >%s</span>'
+        return cell_html % self.get_event_level_display()
+    colored_event_level.allow_tags = True
+    colored_event_level.short_description = u'故障级别'
 
 
 

@@ -1,4 +1,5 @@
 .idea
 *.pyc
 password.py
-
+migrations
+db.sqlite3
