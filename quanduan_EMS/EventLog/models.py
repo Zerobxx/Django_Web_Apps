@@ -1,4 +1,5 @@
 #coding=utf-8
+
 from __future__ import unicode_literals
 
 from django.db import models
@@ -8,7 +9,9 @@ from django.db import models
 class IDC(models.Model):
     name = models.CharField(u'IDC机房名称', max_length=128, unique=True)
     addr = models.CharField(u'IDC地址', max_length=128, null=True, blank=True)
+    # test_field = models.CharField(u'测试字段', max_length=128, null=True)
     memo = models.TextField(u'备注', blank=True, null=True)
+
     def __unicode__(self):
         return self.name
     class Meta:
@@ -41,6 +44,8 @@ class IDC(models.Model):
 class Hardware_Event(models.Model):
     malfunction_date = models.DateField(u'故障日期', blank=True, null=True)
     hostname = models.CharField(u'主机名', max_length=64, blank=True, null=True)
+    addr = models.GenericIPAddressField(u'IP', blank=True, null=True)
+    # management_IP = models.GenericIPAddressField(u'管理IP', blank=True, null=True)
     manufacturer_choices = (
         ('kxtech', u'凯翔'),
         ('GIGABYTE', u'技嘉'),
@@ -63,11 +68,14 @@ class Hardware_Event(models.Model):
 
     event_level = models.CharField(u'故障级别', choices= event_level_choices, max_length=64, default='average')
     malfunction_part = models.CharField(u'故障部件', max_length=64, blank=True, null=True)
+    part_model = models.CharField(u'部件型号', max_length=64, blank=True,null=True)
     solution = models.CharField(u'解决方法', max_length=255, blank=True, null=True)
-    restore_time = models.DateField(u'解决时间', blank=True, auto_now=True)
+    restore_time = models.DateField(u'解决时间', blank=True, null=True)
     IDC = models.CharField(u'IDC机房', max_length=64, blank=True, null=True)
+    location = models.CharField(u'位置', max_length=128, blank=True, null=True)
     batch = models.CharField(u'上线批次', max_length=128, blank=True, null=True)
     distributor = models.CharField(u'供应商', max_length=128, blank=True, null=True)
+    update_time = models.DateTimeField(u'修改时间', null=True, auto_now=True)
     memo = models.TextField(u'备注', blank=True, null=True)
 
     class Meta:

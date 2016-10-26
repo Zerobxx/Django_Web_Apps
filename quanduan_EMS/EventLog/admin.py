@@ -4,7 +4,7 @@ from django import forms
 # Register your models here.
 
 class HardwareEventAdmin(admin.ModelAdmin):
-    list_display = ('id', 'colored_event_level', 'malfunction_date', 'hostname', 'manufacturer', 'malfunction_part','reason_judge')
+    list_display = ('malfunction_date', 'colored_event_level', 'hostname', 'manufacturer', 'malfunction_part', 'part_model', 'reason_judge', 'restore_time')
     search_fields = ('hostname',)
     list_filter = ('event_level', 'malfunction_date', 'manufacturer', 'malfunction_part')
 
