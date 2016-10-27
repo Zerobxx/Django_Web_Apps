@@ -97,6 +97,30 @@ class Hardware_Event(models.Model):
 
 
 
+class Permission(models.Model):
+    codename = models.CharField(u'权限名称', max_length=64)
+    urlname = models.CharField(u'URL名称', max_length=255)
+    perm_method_choices = (
+        ('GET', 'GET'),
+        ('POST', 'POST'),
+    )
+    perm_method = models.CharField(u'请求方法', choices= perm_method_choices, max_length=64, default='GET')
+    argument_list = models.CharField(u'参数列表', max_length=255, help_text='多个参数之间用英文半角逗号隔开', blank=True, null=True)
+    description = models.CharField(u'描述', max_length=255, blank=True, null=True)
+
+    def __unicode__(self):
+        return self.codename
+
+    class Meta:
+        verbose_name = '权限表'
+        verbose_name_plural = '权限表'
+        permissions = (
+            ('view_Hardware_Event_list', '查看硬件事件信息列表'),
+            ('view_Hardware_Event_info', '查看硬件事件详细信息'),
+        )
+
+
+
 
 
 

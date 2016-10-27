@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from EventLog import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^event/', views.list_hardware_event, name='Hardware_Event_list')
 ]

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <table>
+      <tr>
+          <td>故障日期</td>
+          <td>故障级别</td>
+          <td>主机名</td>
+          <td>制造商</td>
+          <td>故障部件</td>
+          <td>部件型号</td>
+          <td>原因判断</td>
+          <td>解决事件</td>
+      </tr>
+      {% for hardware_event in hardware_event_list %}
+      <tr>
+          <td>{{ hardware_event.malfunction_date }}</td>
+          <td>{{ hardware_event.event_level }}</td>
+          <td>{{ hardware_event.hostname }}</td>
+          <td>{{ hardware_event.manufacturer }}</td>
+          <td>{{ hardware_event.malfunction_part }}</td>
+          <td>{{ hardware_event.part_model }}</td>
+          <td>{{ hardware_event.reason_judge }}</td>
+          <td>{{ hardware_event.restore_time }}</td>
+      </tr>
+      {% endfor %}
+  </table>
+</body>
+</html>

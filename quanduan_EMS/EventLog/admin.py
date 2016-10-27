@@ -11,3 +11,4 @@ class HardwareEventAdmin(admin.ModelAdmin):
 admin.site.register(models.Hardware_Event, HardwareEventAdmin)
 admin.site.register(models.IDC)
 # admin.site.register(models.EventLog)
+admin.site.register(models.Permission)
