@@ -1,6 +1,7 @@
 from django.contrib import admin
 from EventLog import models
 from django import forms
+from django.contrib.auth.models import Permission
 # Register your models here.
 
 class HardwareEventAdmin(admin.ModelAdmin):
@@ -11,4 +12,6 @@ class HardwareEventAdmin(admin.ModelAdmin):
 admin.site.register(models.Hardware_Event, HardwareEventAdmin)
 admin.site.register(models.IDC)
 # admin.site.register(models.EventLog)
-admin.site.register(models.Permission)
+admin.site.register(models.UserProfile)
+
+

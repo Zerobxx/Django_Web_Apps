@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Quanduan EMS</h1>
+
+{% block page-container %}
+Welcome To Quanduan EMS!
+
+    <a href="/event/hardware/">硬件事件记录</a>
+
+    <div>
+    {% if request.user.is_authenticated %}
+    <span>{{ request.user.userprofile.name }}</span>
+    {% else %}
+    <span>登录/注册</span>
+    {% endif %}
+    </div>
+
+    <a href="/accounts/logout/">退出</a>
+
+{% endblock %}
+</body>
+</html>

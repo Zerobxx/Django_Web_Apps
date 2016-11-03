@@ -3,6 +3,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -67,14 +68,14 @@ class Hardware_Event(models.Model):
     )
 
     event_level = models.CharField(u'故障级别', choices= event_level_choices, max_length=64, default='average')
-    malfunction_part = models.CharField(u'故障部件', max_length=64, blank=True, null=True)
+    malfunction_part = models.CharField(verbose_name=u'故障部件', max_length=64, blank=True, null=True)
     part_model = models.CharField(u'部件型号', max_length=64, blank=True,null=True)
     solution = models.CharField(u'解决方法', max_length=255, blank=True, null=True)
     restore_time = models.DateField(u'解决时间', blank=True, null=True)
     IDC = models.CharField(u'IDC机房', max_length=64, blank=True, null=True)
     location = models.CharField(u'位置', max_length=128, blank=True, null=True)
-    batch = models.CharField(u'上线批次', max_length=128, blank=True, null=True)
-    distributor = models.CharField(u'供应商', max_length=128, blank=True, null=True)
+    batch = models.CharField(verbose_name=u'上线批次', max_length=128, blank=True, null=True)
+    distributor = models.CharField(verbose_name=u'供应商', max_length=128, blank=True, null=True)
     update_time = models.DateTimeField(u'修改时间', null=True, auto_now=True)
     memo = models.TextField(u'备注', blank=True, null=True)
 
@@ -120,7 +121,16 @@ class Permission(models.Model):
         )
 
 
-
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
+    name = models.CharField(u'姓名', max_length=64)
+    department = models.CharField(u'部门', max_length=64, blank=True, null=True)
+    memo = models.CharField(verbose_name=u'备注', max_length=128, blank=True, null=True)
+    class Meta:
+        verbose_name = '用户信息表'
+        verbose_name_plural = '用户信息表'
+    def __unicode__(self):
+        return self.name
 
 
 

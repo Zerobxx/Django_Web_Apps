@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-  <table>
+{% extends 'index.html' %}
+
+{% block page-container %}
+<table>
       <tr>
           <td>故障日期</td>
           <td>故障级别</td>
@@ -28,6 +24,5 @@
           <td>{{ hardware_event.restore_time }}</td>
       </tr>
       {% endfor %}
-  </table>
-</body>
-</html>
+</table>
+{% endblock %}

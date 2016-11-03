@@ -19,5 +19,8 @@ from EventLog import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^event/', views.list_hardware_event, name='Hardware_Event_list')
+    url(r'^$', views.index),
+    url(r'^accounts/login/$', views.EMS_login),
+    url(r'^accounts/logout/$', views.EMS_logout),
+    url(r'^event/hardware/', views.list_hardware_event, name='Hardware_Event_list'),
 ]

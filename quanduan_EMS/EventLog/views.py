@@ -1,9 +1,30 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponseRedirect
 from EventLog import models
-from EventLog.permission import check_permission
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
+# from EventLog.permission import check_permission
 # Create your views here.
 
-@check_permission
+@login_required
 def list_hardware_event(request):
     hardware_event_list = models.Hardware_Event.objects.all()
     return render(request, 'Hardware_Event_list.html', locals())
+
+@login_required
+def index(request):
+    return render(request, 'index.html')
+
+def EMS_login(request):
+    if request.method == 'POST':
+        user = authenticate(username = request.POST.get('username'), password = request.POST.get('password'))
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect('/')
+        else:
+            login_error = 'Wrong username or password!'
+            return render(request, 'login.html', {'login_error':login_error})
+    return render(request, 'login.html')
+
+def EMS_logout(request):
+    logout(request)
+    return HttpResponseRedirect('/')
