@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 @login_required
 def list_hardware_event(request):
     hardware_event_list = models.Hardware_Event.objects.all()
-    return render(request, 'Hardware_Event_list.html', locals())
+    return render(request, 'EventLog/hardware_event_list.html', locals())
 
 @login_required
 def index(request):
@@ -28,3 +28,6 @@ def EMS_login(request):
 def EMS_logout(request):
     logout(request)
     return HttpResponseRedirect('/')
+
+def dashboard(request):
+    return render(request, 'EventLog/dashbord.html')

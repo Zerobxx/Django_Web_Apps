@@ -133,6 +133,27 @@ class UserProfile(models.Model):
         return self.name
 
 
+class Inventory(models.Model):
+    name = models.CharField(u'设备名称', max_length=128)
+    distributor = models.CharField(u'供应商', max_length=64, blank=True, null=True)
+    manufacturer = models.CharField(u'制造商', max_length=64, blank=True, null=True)
+    model = models.CharField(u'型号', max_length=128, blank=True, null=True)
+    parameters = models.CharField(u'详细参数', max_length=255, blank=True, null=True)
+    SN = models.TextField(u'序列号', blank=True, null=True)
+    arrivaldate = models.DateField(u'到货日期', blank=True, null=True)
+    num = models.IntegerField(u'数量')
+    storage_place = models.CharField(u'存放地点', max_length=255, blank=True, null=True)
+    memo = models.TextField(u'备注', blank=True, null=True)
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = '库存一览表'
+        verbose_name_plural = '库存一览表'
+
+
+
 
 
 

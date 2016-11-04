@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block page-container %}
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>故障日期</th>
+                <th>故障级别</th>
+                <th>主机名</th>
+                <th>制造商</th>
+                <th>故障部件</th>
+                <th>部件型号</th>
+                <th>原因判断</th>
+                <th>解决时间</th>
+                <th>备注</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for hardware_event in hardware_event_list %}
+            <tr>
+                <td>{{ hardware_event.malfunction_date }}</td>
+                <td class="{{ hardware_event.event_level }}">{{ hardware_event.get_event_level_display }}</td>
+                <td>{{ hardware_event.hostname }}</td>
+                <td>{{ hardware_event.get_manufacturer_display }}</td>
+                <td>{{ hardware_event.malfunction_part }}</td>
+                <td>{{ hardware_event.part_model }}</td>
+                <td>{{ hardware_event.reason_judge }}</td>
+                <td class="{{ hardware_event.restore_time }}">{{ hardware_event.restore_time }}</td>
+                <td>{{ hardware_event.memo|truncatechars:20 }}
+            </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+
+{% endblock %}
