@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from EventLog import models
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
+from EventLog import forms
 # from EventLog.permission import check_permission
 # Create your views here.
 
@@ -31,3 +32,8 @@ def EMS_logout(request):
 
 def dashboard(request):
     return render(request, 'EventLog/dashbord.html')
+
+def hardware_event_detail(request, hareware_event_id):
+    hareware_event_obj = models.Hardware_Event.objects.get(id = hareware_event_id)
+    form = forms.HardwareEventModelForm(instance= hareware_event_obj)
+    return render(request, 'EventLog/hardware_event_detail.html', {'hardware_event_form': form})

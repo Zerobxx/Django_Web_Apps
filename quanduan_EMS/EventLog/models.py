@@ -52,6 +52,7 @@ class Hardware_Event(models.Model):
         ('GIGABYTE', u'技嘉'),
         ('ASUS', u'华硕'),
         ('H3C', u'华三'),
+        ('Inspur', u'浪潮'),
         ('other', u'其他'),
     )
     manufacturer = models.CharField(u'制造商', choices= manufacturer_choices, max_length=64)
@@ -138,6 +139,7 @@ class Inventory(models.Model):
     distributor = models.CharField(u'供应商', max_length=64, blank=True, null=True)
     manufacturer = models.CharField(u'制造商', max_length=64, blank=True, null=True)
     model = models.CharField(u'型号', max_length=128, blank=True, null=True)
+    target_device = models.CharField(u'主要适配机型', max_length=128, blank=True, null=True)
     parameters = models.CharField(u'详细参数', max_length=255, blank=True, null=True)
     SN = models.TextField(u'序列号', blank=True, null=True)
     arrivaldate = models.DateField(u'到货日期', blank=True, null=True)
@@ -153,8 +155,44 @@ class Inventory(models.Model):
         verbose_name_plural = '库存一览表'
 
 
+class Test_Device(models.Model):
+    location = models.CharField(u'测试地点', max_length=64)
+    name = models.CharField(u'设备名称', max_length=128, blank=True, null=True)
+    model = models.CharField(u'型号', max_length=128, blank=True, null=True)
+    manufacturer = models.CharField(u'品牌厂商', max_length=64, blank=True, null=True)
+    distributor = models.CharField(u'供应商', max_length=64, blank=True, null=True)
+    num = models.IntegerField(u'数量', default=1)
+    SN = models.CharField(max_length=128, blank=True, null=True)
+    arrivaldate = models.DateField(u'借入日期', blank=True, null=True)
+    test_engineer = models.CharField(u'测试工程师', max_length=128, blank=True, null=True)
+    purpose = models.CharField(u'测试目的', max_length=255, blank=True, null=True)
+    result = models.CharField(u'测试结果', max_length=128, blank=True, null=True)
+    if_give_back_choices = (
+        (True, u'已归还'),
+        (False, u'未归还'),
+    )
+    if_give_back = models.BooleanField(u'是否归还',choices= if_give_back_choices, default=False)
+    give_back_date = models.DateField(u'归还日期', blank=True, null=True)
+    give_back_method = models.CharField(u'归还方式', max_length=128, blank=True, null=True)
+    memo = models.TextField(u'备注', blank=True, null=True)
 
+    def __unicode__(self):
+        return self.name
 
+    class Meta:
+        verbose_name = '借测设备一览表'
+        verbose_name_plural = '借测设备一览表'
+
+    def colored_if_give_back(self):
+        if self.if_give_back == False:
+            cell_html = '<span style="background: orange;">%s</span>'
+        elif self.if_give_back == True:
+            cell_html = '<span style="background: yellowgreen;">%s</span>'
+        else:
+            cell_html = '<span style="background: red;">%s</span>'
+        return cell_html % self.get_if_give_back_display()
+    colored_if_give_back.allow_tags = True
+    colored_if_give_back.shrt_description = u'是否归还'
 
 
 

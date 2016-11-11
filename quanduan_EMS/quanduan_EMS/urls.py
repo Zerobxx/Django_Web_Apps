@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^accounts/login/$', views.EMS_login),
     url(r'^accounts/logout/$', views.EMS_logout),
-    url(r'^event/hardware/', views.list_hardware_event, name='Hardware_Event_list'),
-    url(r'^event/$', views.dashboard)
+    url(r'^event/hardware/$', views.list_hardware_event, name='Hardware_Event_list'),
+    url(r'^event/$', views.dashboard),
+    url(r'^event/hardware/(\d+)/$', views.hardware_event_detail),
 ]

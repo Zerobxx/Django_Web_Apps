@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block page-container %}
+    <form class="form-horizontal" method="post" action="">{% csrf_token %}
+        {% for hardware_event in hardware_event_form %}
+              <div class="form-group">
+                <label class="col-sm-2 control-label">{{ hardware_event.label }}</label>
+                <div class="col-sm-9">
+                  {{ hardware_event }}
+                </div>
+              </div>
+        {% endfor %}
+        <div class="col-md-11">
+            <input class="btn btn-success pull-right" type="submit" value="Save">
+        </div>
+    </form>
+{% endblock %}
