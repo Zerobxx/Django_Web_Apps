@@ -35,5 +35,12 @@ def dashboard(request):
 
 def hardware_event_detail(request, hareware_event_id):
     hareware_event_obj = models.Hardware_Event.objects.get(id = hareware_event_id)
-    form = forms.HardwareEventModelForm(instance= hareware_event_obj)
+    if request.method == 'POST':
+        form = forms.HardwareEventModelForm(request.POST, instance=hareware_event_obj)
+        if form.is_valid():
+            form.save()
+            base_url = '/'.join(request.path.split('/')[:-2])
+            return HttpResponseRedirect(base_url)
+    else:
+        form = forms.HardwareEventModelForm(instance= hareware_event_obj)
     return render(request, 'EventLog/hardware_event_detail.html', {'hardware_event_form': form})

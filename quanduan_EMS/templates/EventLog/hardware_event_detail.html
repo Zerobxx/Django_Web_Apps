@@ -2,11 +2,22 @@
 
 {% block page-container %}
     <form class="form-horizontal" method="post" action="">{% csrf_token %}
-        {% for hardware_event in hardware_event_form %}
+        {% for field in hardware_event_form %}
               <div class="form-group">
-                <label class="col-sm-2 control-label">{{ hardware_event.label }}</label>
+                {% if field.field.required %}
+                    <label class="col-sm-2 control-label">*{{ field.label }}</label>
+                {% else %}
+                    <label style="font-weight:normal" class="col-sm-2 control-label">{{ field.label }}</label>
+                {% endif %}
                 <div class="col-sm-9">
-                  {{ hardware_event }}
+                  {{ field }}
+                  {% if field.errors %}
+                    <ul>
+                        {% for error in field.errors %}
+                            <li style="color:red">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                  {% endif %}
                 </div>
               </div>
         {% endfor %}
