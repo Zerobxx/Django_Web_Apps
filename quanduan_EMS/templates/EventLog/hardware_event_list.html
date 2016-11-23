@@ -21,7 +21,7 @@
         <tbody>
         {% for hardware_event in hardware_event_list %}
             <tr>
-                <td><a href="/event/hardware/{{ hardware_event.id }}/">{{ hardware_event.id }}</a></td>
+                <td><a href="{% url 'hardware_event_detail' hardware_event.id %}">{{ hardware_event.id }}</a></td>
                 <td>{{ hardware_event.malfunction_date }}</td>
                 <td class="{{ hardware_event.event_level }}">{{ hardware_event.get_event_level_display }}</td>
                 <td>{{ hardware_event.hostname }}</td>

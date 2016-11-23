@@ -135,7 +135,24 @@ class UserProfile(models.Model):
 
 
 class Inventory(models.Model):
-    name = models.CharField(u'设备名称', max_length=128)
+    name = models.CharField(u'资产名称', max_length=128)
+
+    usage_choices = (
+        ('spare_parts', u'备品备件'),
+        ('upgrade_parts', u'升级部件'),
+        ('remaining_parts', u'剩余部件/用料'),
+        ('others', u'其他'),
+    )
+    usage = models.CharField(u'用途', choices= usage_choices, max_length=64, default='spare_parts')
+
+    importance_level_choices = (
+        ('very_important', u'非常重要'),
+        ('important', u'重要'),
+        ('normal', u'一般'),
+        ('unworthy', u'不重要的/无价值的'),
+    )
+    importance_level = models.CharField(u'重要性（价值）', choices= importance_level_choices, max_length=64, default='normal')
+
     distributor = models.CharField(u'供应商', max_length=64, blank=True, null=True)
     manufacturer = models.CharField(u'制造商', max_length=64, blank=True, null=True)
     model = models.CharField(u'型号', max_length=128, blank=True, null=True)
@@ -153,6 +170,21 @@ class Inventory(models.Model):
     class Meta:
         verbose_name = '库存一览表'
         verbose_name_plural = '库存一览表'
+
+    def colored_importance_level(self):
+        if self.importance_level == 'very_important':
+            cell_html = '<span style="background: red;">%s</span>'
+        elif self.importance_level == 'important':
+            cell_html = '<span style="background: orange;">%s</span>'
+        elif self.importance_level == 'normal':
+            cell_html = '<span style="background: yellowgreen;">%s</span>'
+        elif self.importance_level == 'unworthy':
+            cell_html = '<span style="background: whitesmoke;">%s</span>'
+        else:
+            cell_html = '<span >%s</span>'
+        return cell_html % self.get_importance_level_display()
+    colored_importance_level.allow_tags = True
+    colored_importance_level.short_description = u'重要性（价值）'
 
 
 class Test_Device(models.Model):
@@ -194,6 +226,10 @@ class Test_Device(models.Model):
     colored_if_give_back.allow_tags = True
     colored_if_give_back.shrt_description = u'是否归还'
 
+
+class Constract(models.Model):
+    constract_num = models.CharField(u'合同号', max_length=128, primary_key=True)
+    constract_name = models.CharField(u'合同名称', max_length=128)
 
 
 

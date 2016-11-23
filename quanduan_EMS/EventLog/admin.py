@@ -8,11 +8,13 @@ class HardwareEventAdmin(admin.ModelAdmin):
     list_display = ('malfunction_date', 'colored_event_level', 'hostname', 'manufacturer', 'malfunction_part', 'part_model', 'reason_judge', 'restore_time')
     search_fields = ('hostname',)
     list_filter = ('event_level', 'malfunction_date', 'manufacturer', 'malfunction_part')
+    date_hierarchy = 'malfunction_date'
+    ordering = ('malfunction_date',)
 
 class InventoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'manufacturer', 'model', 'target_device', 'parameters', 'num', 'storage_place')
-    search_fields = ('name', 'model')
-    list_filter = ('name', 'distributor', 'model', 'storage_place')
+    list_display = ('name', 'usage', 'colored_importance_level', 'manufacturer', 'model', 'target_device', 'parameters', 'num', 'storage_place')
+    search_fields = ('name', 'storage_place')
+    list_filter = ('usage', 'distributor', 'importance_level', 'storage_place')
 
 class Test_DeviceAdmin(admin.ModelAdmin):
     list_display = ('location', 'name', 'model', 'manufacturer', 'num', 'arrivaldate', 'test_engineer', 'purpose', 'result', 'colored_if_give_back')

@@ -33,6 +33,7 @@ def EMS_logout(request):
 def dashboard(request):
     return render(request, 'EventLog/dashbord.html')
 
+@login_required
 def hardware_event_detail(request, hareware_event_id):
     hareware_event_obj = models.Hardware_Event.objects.get(id = hareware_event_id)
     if request.method == 'POST':
@@ -44,3 +45,6 @@ def hardware_event_detail(request, hareware_event_id):
     else:
         form = forms.HardwareEventModelForm(instance= hareware_event_obj)
     return render(request, 'EventLog/hardware_event_detail.html', {'hardware_event_form': form})
+
+
+
