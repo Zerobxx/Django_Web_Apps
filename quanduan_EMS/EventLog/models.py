@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 
+
 # Create your models here.
 
 class IDC(models.Model):
@@ -83,6 +84,9 @@ class Hardware_Event(models.Model):
     class Meta:
         verbose_name = '硬件故障记录'
         verbose_name_plural = '硬件故障记录'
+        permissions = (
+            ('view_Hardware_Event_list', u'查看硬件事件信息列表'),
+        )
 
     def colored_event_level(self):
         if self.event_level == 'high':
@@ -96,30 +100,6 @@ class Hardware_Event(models.Model):
         return cell_html % self.get_event_level_display()
     colored_event_level.allow_tags = True
     colored_event_level.short_description = u'故障级别'
-
-
-
-class Permission(models.Model):
-    codename = models.CharField(u'权限名称', max_length=64)
-    urlname = models.CharField(u'URL名称', max_length=255)
-    perm_method_choices = (
-        ('GET', 'GET'),
-        ('POST', 'POST'),
-    )
-    perm_method = models.CharField(u'请求方法', choices= perm_method_choices, max_length=64, default='GET')
-    argument_list = models.CharField(u'参数列表', max_length=255, help_text='多个参数之间用英文半角逗号隔开', blank=True, null=True)
-    description = models.CharField(u'描述', max_length=255, blank=True, null=True)
-
-    def __unicode__(self):
-        return self.codename
-
-    class Meta:
-        verbose_name = '权限表'
-        verbose_name_plural = '权限表'
-        permissions = (
-            ('view_Hardware_Event_list', '查看硬件事件信息列表'),
-            ('view_Hardware_Event_info', '查看硬件事件详细信息'),
-        )
 
 
 class UserProfile(models.Model):
@@ -232,7 +212,23 @@ class Constract(models.Model):
     constract_name = models.CharField(u'合同名称', max_length=128)
 
 
+class Permissions(models.Model):
+    codename = models.CharField(u'权限名称', max_length=128)
+    urlname = models.CharField(u'URL名称', max_length=255)
+    perm_method_choices = (
+        ('GET', 'GET'),
+        ('POST', 'POST'),
+    )
+    perm_method = models.CharField(u'请求方法', choices= perm_method_choices, max_length=64, default='GET')
+    arguments_list = models.CharField(u'参数列表', max_length=255, help_text='多个参数之间用英文半角逗号隔开', blank=True, null=True)
+    description = models.CharField(u'描述', max_length=255, blank=True, null=True)
 
+    def __unicode__(self):
+        return self.codename
+
+    class Meta:
+        verbose_name = '权限表'
+        verbose_name_plural = '权限表'
 
 
 
