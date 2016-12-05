@@ -207,9 +207,34 @@ class Test_Device(models.Model):
     colored_if_give_back.shrt_description = u'是否归还'
 
 
-class Constract(models.Model):
+class Constracts(models.Model):
     constract_num = models.CharField(u'合同号', max_length=128, primary_key=True)
     constract_name = models.CharField(u'合同名称', max_length=128)
+    constract_date = models.DateField(u'签订时间', blank=True, null=True)
+    project_batch = models.SmallIntegerField(u'项目批次', default=1)
+    contract_details = models.CharField(u'合同详细', max_length=255)
+    contract_first_party = models.CharField(u'合同甲方', max_length=128)
+    contract_second_party = models.CharField(u'合同乙方', max_length=128)
+    maintenance_level_and_time = models.CharField(u'维保级别&时间', max_length=255, blank=True, null=True)
+    maintenance_start_time = models.DateField(u'维保起始时间', blank=True, null=True)
+    maintenance_end_time = models.DateField(u'维保结束时间', blank=True, null=True)
+    whether_under_guarantee_choices = (
+        ('under_guarantee', u'保内'),
+        ('no_under_guarantee', u'无维保'),
+    )
+    whether_under_guarantee = models.CharField(u'是否保内', choices=whether_under_guarantee_choices, max_length=64, default='under_guarantee')
+    constract_services = models.CharField(u'合同承诺服务', max_length=255)
+    memo = models.TextField(u'备注', blank=True, null=True)
+    updatetime = models.DateTimeField(u'更新时间', auto_now=True)
+
+    def __unicode__(self):
+        return self.constract_name
+
+    class Meta:
+        verbose_name = '合同及维保'
+        verbose_name_plural = '合同及维保'
+
+
 
 
 class Permissions(models.Model):
@@ -229,6 +254,8 @@ class Permissions(models.Model):
     class Meta:
         verbose_name = '权限表'
         verbose_name_plural = '权限表'
+
+
 
 
 

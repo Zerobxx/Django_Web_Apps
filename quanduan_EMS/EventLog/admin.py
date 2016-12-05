@@ -28,5 +28,6 @@ admin.site.register(models.UserProfile)
 admin.site.register(models.Inventory, InventoryAdmin)
 admin.site.register(models.Test_Device, Test_DeviceAdmin)
 admin.site.register(models.Permissions)
+admin.site.register(models.Constracts)
 
 
